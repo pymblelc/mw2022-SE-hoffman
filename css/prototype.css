@@ -1,0 +1,33 @@
+body {
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: white;
+    
+}
+
+.header{
+    display:flex;
+    align-items: center;
+    font-family: monospace;
+}
+.header button  {
+    width: 6rem;
+    height: 2rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
+    font-family: monospace;
+}
+
+.footer {
+    width:18rem; 
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.footer button {
+    font-family: monospace;
+}
