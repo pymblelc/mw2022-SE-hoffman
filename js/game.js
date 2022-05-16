@@ -73,7 +73,7 @@ var Game = {
         this.player = new Player(10, 10);
         this.enemy = new Enemy(0, 0);
     },
-// draw display and game on screen 
+    // draw display and game on screen 
     draw: function () {
         this.display.clear();
         this.display.draw(this.player.x, this.player.y, "@");
@@ -81,23 +81,32 @@ var Game = {
         //for loop to run over each block x,y and draw
         for (const block of blocks) {
             console.log(block);
-            this.display.draw(block[0],block[1],"#");
+            this.display.draw(block[0], block[1], "#");
         }
 
     },
     //move counter + every time update runs (per turn), allowing enemy movement to rely on player (turn based playing)
     update: function () {
         this.moveCounter++;
+    },
+    // clicking restart button resets game
+    restart: function () {
+        console.log("restart");
+        moveCounter = 0;
+        Player(10,10);
+        Enemy(0,0);
     }
 
 };
+
+document.getElementById("btnRestart").onclick = Game.restart
 
 // Basically a linear search
 function collision(position) {
     // If the position is in the blocks array, return false
 
     // Loop through the array
-    for(const block of blocks) {
+    for (const block of blocks) {
         // If current block is our position, return false
         if (block[0] == position[0] && block[1] == position[1]) {
             return false;
@@ -115,22 +124,22 @@ document.addEventListener("DOMContentLoaded", function () {
         // Player movement
         switch (event.key) {
             case "ArrowLeft":
-                if (Game.player.x > 0 && collision([Game.player.x-1, Game.player.y])) {
+                if (Game.player.x > 0 && collision([Game.player.x - 1, Game.player.y])) {
                     Game.player.x -= 1;
                 }
                 break;
             case "ArrowRight":
-                if (Game.player.x < 19 && collision([Game.player.x+1, Game.player.y])) {
+                if (Game.player.x < 19 && collision([Game.player.x + 1, Game.player.y])) {
                     Game.player.x += 1;
                 }
                 break;
             case "ArrowUp":
-                if (Game.player.y > 0 && collision([Game.player.x, Game.player.y-1])) {
+                if (Game.player.y > 0 && collision([Game.player.x, Game.player.y - 1])) {
                     Game.player.y -= 1;
                 }
                 break;
             case "ArrowDown":
-                if (Game.player.y < 19 && collision([Game.player.x, Game.player.y+1])) {
+                if (Game.player.y < 19 && collision([Game.player.x, Game.player.y + 1])) {
                     Game.player.y += 1;
                 }
                 break;
@@ -144,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
         Game.enemy.x = Game.enemy.patrolPath[Game.moveCounter % Game.enemy.patrolPath.length][0];
         Game.enemy.y = Game.enemy.patrolPath[Game.moveCounter % Game.enemy.patrolPath.length][1];
 
-     // Update the game
+        // Update the game
         Game.update();
         // Draw game
         Game.draw();
