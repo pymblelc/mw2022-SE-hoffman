@@ -93,8 +93,8 @@ var Game = {
     restart: function () {
         console.log("restart");
         moveCounter = 0;
-        Player(10,10);
-        Enemy(0,0);
+        new Player(10,10);
+        new Enemy(0,0);
     }
 
 };
