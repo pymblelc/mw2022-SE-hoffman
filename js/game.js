@@ -95,11 +95,24 @@ var Game = {
         moveCounter = 0;
         this.player = new Player(10,10);
         this.enemy = new Enemy(0,0);
+        this.draw();
     }
 
 };
 
-document.getElementById("btnRestart").onclick = Game.restart
+
+let interval = setInterval(() => {
+    Game.enemy.x = Game.enemy.patrolPath[Game.moveCounter % Game.enemy.patrolPath.length][0];
+    Game.enemy.y = Game.enemy.patrolPath[Game.moveCounter % Game.enemy.patrolPath.length][1];
+     console.log("tick");
+ }, 1000);
+// when detected, clear the interval
+// clearInterval(interval);
+
+document.getElementById("btnRestart").onclick = function() {
+    console.log(this);
+    Game.restart();
+};
 
 // Basically a linear search
 function collision(position) {
@@ -150,8 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // % is modulus, allows for capping and not allowing array to go over 
 
-        Game.enemy.x = Game.enemy.patrolPath[Game.moveCounter % Game.enemy.patrolPath.length][0];
-        Game.enemy.y = Game.enemy.patrolPath[Game.moveCounter % Game.enemy.patrolPath.length][1];
+    
 
         // Update the game
         Game.update();
