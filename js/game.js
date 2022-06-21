@@ -121,7 +121,7 @@ var Game = {
     update: function () {
         this.moveCounter++;
 
-        var display = new ROT.Display({ DisplayOptions });
+        /* var display = new ROT.Display({ DisplayOptions });
         document.getElementById("game").appendChild(display.getContainer());
 
         // generate map and store its data 
@@ -156,7 +156,7 @@ var Game = {
         // highlight 
         display.draw(8, 45, "", "", "#3f3");
         display.draw(130, 8, "", "", "#3f3");
-        display.draw(98, 38, "", "", "#f33"); * /
+        display.draw(98, 38, "", "", "#f33"); */
     },
     // clicking restart button resets game
     restart: function () {
