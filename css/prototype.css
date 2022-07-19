@@ -15,8 +15,7 @@ body {
     font-family: monospace;
 }
 .header button  {
-    width: 6rem;
-    height: 2rem;
+    justify-content: space-evenly;
     margin-right: 1rem;
     margin-left: 1rem;
     font-family: monospace;

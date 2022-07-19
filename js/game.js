@@ -1,4 +1,5 @@
 var Spotted = false;
+
 //block x,y locations 
 var blocks = [
     [7, 6],
@@ -17,8 +18,6 @@ class Character {
         this.x = x;
         this.y = y;
     }
-
-    update() { }
 }
 
 class Player extends Character {
@@ -76,6 +75,8 @@ var Game = {
     enemy: null,
     interval: null,
     moveCounter: 0,
+    collide: false,
+    
     init: function () {
         // Display stuff
         let DisplayOptions = {
@@ -109,54 +110,48 @@ var Game = {
     draw: function () {
         this.display.clear();
         this.display.draw(this.player.x, this.player.y, "@");
-        this.display.draw(this.enemy.x, this.enemy.y, "%");
         //for loop to run over each block x,y and draw
         for (const block of blocks) {
             //console.log(block);
             this.display.draw(block[0], block[1], "#");
         }
-
+        if (Spotted == true) {
+            Game.pathFind();
+        }
+        this.display.draw(this.enemy.x, this.enemy.y, "%");
     },
-    //move counter + every time update runs (per turn), allowing enemy movement to rely on player (turn based playing)
-    update: function () {
-        this.moveCounter++;
-
-        /* var display = new ROT.Display({ DisplayOptions });
-        document.getElementById("game").appendChild(display.getContainer());
-
-        // generate map and store its data 
-        var data = {};
-        var map = new ROT.Map.Uniform(width, height);
-        map.create(function (x, y, value) {
-            data[x + "," + y] = value; // data["1,2"]
-            display.DEBUG(x, y, value);
-        });
+    
+    pathFind: function () {
+        console.log("pathfinding");
 
         // "0" == 0 // true (ducktype)
         // "0" === 0 // false (actually checking string vs integer) 
 
         // input callback informs about map structure 
-        var passableCallback = function (x, y) {
-            return (data[x + "," + y] === 0);
+        function passableCallback(x, y) {
+            let hasCollided = collision([x, y]);
+            return hasCollided;
+            
         }
 
+        var astarSettings = {
+            topology: 4
+        };
+
         // prepare path to given coords (target)
-        var astar = new ROT.Path.AStar(Game.enemy.x, Game.enemy.y, passableCallback);
+        var astar = new ROT.Path.AStar(this.player.x, this.player.y, passableCallback, astarSettings);
 
+        var hasNextStep = false;
         // compute from given coords #1 
-        astar.compute(8, 45, function (x, y) {
-            display.draw(x, y, "", "", "#800");
+        astar.compute(this.enemy.x, this.enemy.y, function(x, y) {
+            if (Game.enemy.x == x && Game.enemy.y ==y) return;
+            if (hasNextStep) return;
+            hasNextStep = true;
+            Game.enemy.x = x;
+            Game.enemy.y = y;
+
         });
 
-        // compute from given coords #2 
-        astar.compute(130, 8, function (x, y) {
-            display.draw(x, y, "", "", "#800");
-        });
-
-        // highlight 
-        display.draw(8, 45, "", "", "#3f3");
-        display.draw(130, 8, "", "", "#3f3");
-        display.draw(98, 38, "", "", "#f33"); */
     },
     // clicking restart button resets game
     restart: function () {
@@ -167,7 +162,7 @@ var Game = {
         this.draw();
         Spotted = false;
         clearInterval(Game.interval);
-        this.interval = setInterval(Game.timer, 500);
+        Game.timer();
 
     }
 
@@ -206,28 +201,35 @@ document.addEventListener("DOMContentLoaded", function () {
             case "ArrowLeft":
                 if (Game.player.x > 0 && collision([Game.player.x - 1, Game.player.y])) {
                     Game.player.x -= 1;
+                //move counter + every time update runs (per turn), allowing enemy movement to rely on player (turn based playing)
+                    Game.moveCounter++;
                 }
                 break;
             case "ArrowRight":
                 if (Game.player.x < 19 && collision([Game.player.x + 1, Game.player.y])) {
                     Game.player.x += 1;
+                    Game.moveCounter++;
                 }
                 break;
             case "ArrowUp":
                 if (Game.player.y > 0 && collision([Game.player.x, Game.player.y - 1])) {
                     Game.player.y -= 1;
+                    Game.moveCounter++;
                 }
                 break;
             case "ArrowDown":
                 if (Game.player.y < 19 && collision([Game.player.x, Game.player.y + 1])) {
                     Game.player.y += 1;
+                    Game.moveCounter++;
                 }
                 break;
         }
         if (Spotted == true) {
-            Game.enemy.x = Game.enemy.patrolPath[Game.moveCounter % Game.enemy.patrolPath.length][0];
-            Game.enemy.y = Game.enemy.patrolPath[Game.moveCounter % Game.enemy.patrolPath.length][1];
-        }
+            // Game.enemy.x = Game.enemy.patrolPath[Game.moveCounter % Game.enemy.patrolPath.length][0];
+            // Game.enemy.y = Game.enemy.patrolPath[Game.moveCounter % Game.enemy.patrolPath.length][1]; 
+        } 
+        // Draw game
+        Game.draw();
         // console.log(Game.moveCounter % 4);
         // console.log(Game.enemy.patrolPath[Game.moveCounter % 4]);
 
@@ -236,9 +238,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         console.log(Game.moveCounter);
         // Update the game
-        Game.update();
-        // Draw game
-        Game.draw();
         console.log(Game.player);
     });
 });

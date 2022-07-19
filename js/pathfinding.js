@@ -29,10 +29,9 @@ astar.compute(8, 45, function(x, y) {
 
 // compute from given coords #2 
 astar.compute(130, 8, function(x, y) {
-    display.draw(x, y, "", "", "#800");
+    Game.display.draw(x, y, "", "", "#800");
 });
 
 // highlight 
-display.draw(8,  45, "", "", "#3f3");
-display.draw(130, 8, "", "", "#3f3");
-display.draw(98, 38, "", "", "#f33"); 
+this.display.draw(this.player.x, this.player.y, "", "", "#3f3");
+this.display.draw(this.enemy.x, this.enemy.y, "", "", "#3f3"); 

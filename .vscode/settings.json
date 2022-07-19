@@ -8,5 +8,8 @@
         "**/Thumbs.db": true,
         ".vscode/": true,
         ".github/": true,
-    }
+    },
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "main"
+    ]
 }
