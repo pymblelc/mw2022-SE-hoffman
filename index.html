@@ -4,21 +4,35 @@
 <head>
     <title>My First Game</title>
     <script src="https://cdn.jsdelivr.net/npm/rot-js@2/dist/rot.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js" integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30=" crossorigin="anonymous"></script>
     <!-- <script src="js/game.js" defer></script> -->
     <link rel="stylesheet" href="css/prototype.css">
-    <script src="js/game.js" defer></script>
+    <script src="js/maptest.js" defer></script>
 </head>
 
 <body>
-    <div class="header">
-        <button>Leaderboard</button>
-        <h1>Prototype</h1>
-        <button id="btnRestart">↻</button>
+    <div id="menu-page">
+        <div class="header">
+            <h1>Prototype</h1>
+        </div>
+
+        <div class="footer">
+            <button id="btnPlay">▶▷</button>
+        </div>
     </div>
-    <div id="game"></div>
-    <div class="footer">
-        <button>Tutorial</button>
+    <div id="game-page">
+        <div class="header">
+            <button>Leaderboard</button>
+            <button id="btnRestart">↻</button>
+        </div>
+        <div id="game"></div>
+        <div class="footer">
+            <button>Tutorial</button>
+        </div>
     </div>
+    
+    
 </body>
 
 </html>

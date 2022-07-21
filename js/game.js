@@ -1,3 +1,30 @@
+// basic hide/show for homepage --> actual game 
+// for (element of document.getElementsByClassName("header")) {
+//     element.style.display = "none";
+// }
+// for (element of document.getElementsByClassName("footer")) {
+//     element.style.display = "none";
+// }
+
+document.getElementById("game-page").style.display = "none"
+    function show() {
+        document.getElementById("game-page").style.display = "";  
+        document.getElementById("menu-page").style.display = "none";  
+    }
+// function show() {
+//     document.getElementById("game").style.display = "";
+//     document.getElementById("btnPlay").style.display = "none";
+//     for (element of document.getElementsByClassName("header")) {
+//         element.style.display = "";
+//     }
+//     for (element of document.getElementsByClassName("footer")) {
+//         element.style.display = "";
+//     }
+
+// }
+
+document.getElementById("btnPlay").onclick = show;
+
 var Spotted = false;
 
 //block x,y locations 
@@ -134,7 +161,7 @@ var Game = {
             
         }
 
-        var astarSettings = {
+        var astarSettings = { 
             topology: 4
         };
 
@@ -162,7 +189,7 @@ var Game = {
         this.draw();
         Spotted = false;
         clearInterval(Game.interval);
-        Game.timer();
+        Game.interval = setInterval(Game.timer, 500);
 
     }
 
